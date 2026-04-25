@@ -38,4 +38,4 @@ A Wazuh Agent is deployed within the Docker environment with a custom 4-Vector X
 1. **Boot the Cyber Range:**
    Execute the custom SOC deployment script to initialize the isolated network and Wazuh Manager.
    ```bash
-   ./SOC_start.sh  # (Or whatever your exact command is!)
+   .\Start-SOC.ps1 
