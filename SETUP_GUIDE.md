@@ -21,37 +21,33 @@ To ensure stable execution of the local SIEM alongside multiple containerized ho
 *   **Git** 
     
 
-⚙️ 2. Environment Configuration
+ 2\. Environment Configuration
 -------------------------------
 
 ### Phase A: Repository Initialization
 
 Clone the repository to the target host machine:
 
-Bash
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   git clone https://github.com/FaraazKhatib/Synthetic-Threat-Pipeline.git  cd Synthetic-Threat-Pipeline`
+
+`git clone https://github.com/FaraazKhatib/Synthetic-Threat-Pipeline.git  cd Synthetic-Threat-Pipeline`
 
 ### Phase B: Python Dependencies
 
 The data fuser and machine learning pipeline rely on specific data science libraries.
 
-Bash
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pip install pandas scikit-learn matplotlib   `
+`pip install pandas scikit-learn matplotlib   `
 
 ### Phase C: Infrastructure Boot-Up
 
 Initialize the Docker containers to pull the honeypot images (Cowrie, VSFTPD, DVWA) and establish the isolated local network.
 
-Bash
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`# Execute the master deployment script  .\Start-SOC.ps1`  
+`# Execute the master deployment script  .\Start-SOC.ps1`  
 
 _Note: Allow 3–5 minutes for the containers to fully initialize and for the Wazuh Agent to complete its required system integrity scan._
 
 
-🧪 3. Pipeline Execution
+ 3\. Pipeline Execution
 ------------------------
 
 Once the infrastructure is actively listening, the data generation and classification pipeline can be executed sequentially:
