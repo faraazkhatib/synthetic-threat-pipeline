@@ -1,0 +1,158 @@
+﻿version: "3.8"
+
+services:
+
+  loki:
+    image: grafana/loki:2.8.2
+    container_name: loki
+    user: "0:0"
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/config:/etc/loki
+      - ./loki/data:/loki         # host-visible Loki data (indexes/chunks/cache)
+      - loki-wal:/wal             # use a named volume for WAL to avoid Windows ACL issues
+    restart: unless-stopped
+    networks:
+      - honeynet
+
+  loki-proxy:
+    image: nginx:alpine
+    container_name: loki-proxy
+    ports:
+      - "3200:3100"
+    volumes:
+      - ./nginx/loki.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - loki
+    networks:
+      - honeynet
+
+  promtail:
+    image: grafana/promtail:2.8.2
+    container_name: promtail
+    volumes:
+      - ./promtail/promtail.yaml:/etc/promtail/promtail.yaml:ro
+      - ./promtail/positions:/tmp/positions
+      # MAP THE LOGS FROM HOST TO PROMTAIL
+      - ./logs/cowrie:/home/cowrie/cowrie/var/log/cowrie:ro
+      - ./logs/dvwa:/var/log/dvwa:ro          # <--- Reading DVWA
+      - ./logs/sar2html:/var/log/sar2html:ro  # <--- Reading Sar2HTML
+      - ./logs/vsftpd:/var/log/vsftpd:ro      # <--- Reading FTP
+    command: -config.file=/etc/promtail/promtail.yaml
+    restart: unless-stopped
+    depends_on:
+      - loki
+    networks:
+      - honeynet
+
+  grafana:
+    image: grafana/grafana:9.5.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-storage:/var/lib/grafana
+    restart: unless-stopped
+    depends_on:
+      - loki
+    networks:
+      - honeynet
+
+  frontend-simple:
+    build: ./frontend-simple
+    image: honeynet_frontend_simple
+    ports:
+      - "8081:80"
+    environment:
+      - VITE_LOKI_URL=http://localhost:3200
+      - VITE_ALERT_THRESHOLD=30
+      - VITE_ALERT_WINDOW_MINUTES=5
+    depends_on:
+      - loki-proxy
+    networks:
+      - honeynet
+  wazuh.indexer:
+    image: wazuh/wazuh-indexer:4.7.2
+    container_name: wazuh.indexer
+    hostname: wazuh.indexer
+    restart: always
+    ports:
+      - "9200:9200"
+    environment:
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx1g" # Saves RAM
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - wazuh-indexer-data-final:/var/lib/wazuh-indexer
+    networks:
+      - honeynet
+
+  wazuh.manager:
+    build:
+      context: .
+      dockerfile: Dockerfile.manager
+    
+    container_name: wazuh.manager
+    hostname: wazuh.manager
+    restart: always
+    ports:
+      - "1514:1514"
+      - "55000:55000"
+    environment:
+      - INDEXER_URL=https://wazuh.indexer:9200
+    depends_on:
+      - wazuh.indexer
+    volumes:
+      - wazuh-manager-data-final:/var/ossec/data
+      
+      
+    networks:
+      - honeynet
+
+  wazuh.dashboard:
+    image: wazuh/wazuh-dashboard:4.7.2
+    container_name: wazuh.dashboard
+    hostname: wazuh.dashboard
+    restart: always
+    ports:
+      - "443:5601"  # Access via https://localhost
+    environment:
+      - WAZUH_API_URL=https://wazuh.manager:55000
+      - INDEXER_URL=https://wazuh.indexer:9200
+    depends_on:
+      - wazuh.manager
+    volumes:
+      - ./wazuh-dashboard-config.yml:/usr/share/wazuh-dashboard/data/wazuh/config/wazuh.yml:ro
+    networks:
+      - honeynet
+    
+
+
+
+
+
+networks:
+  honeynet:
+    external: true
+    name: g2honeynetdeploy_honeynet
+
+volumes:
+  grafana-storage:
+  loki-wal: {}
+  wazuh-indexer-data-final:
+  wazuh-manager-data-final:
+  

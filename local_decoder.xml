@@ -1,0 +1,8 @@
+<decoder name="custom_python_app">
+  <prematch>Failed login attempt</prematch>
+</decoder>
+<decoder name="custom_python_app_child">
+  <parent>custom_python_app</parent>
+  <regex>User: (\S+) - IP: (\S+)</regex>
+  <order>srcuser, srcip</order>
+</decoder>

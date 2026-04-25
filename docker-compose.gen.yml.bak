@@ -1,0 +1,37 @@
+﻿version: '3'
+services:
+  cowrie-ssh:
+    build: ./Dockerfiles/cowire
+    image: honeypot_cowrie
+    container_name: cowrie-ssh
+    ports:
+      - "2222:22"        # safer: map host 2222 -> container 22
+    volumes:
+      - ./logs/cowrie:/var/log/cowrie   # persistent logs on host
+      - ./cowrie-data:/home/cowrie/data
+    restart: unless-stopped
+
+  vsftpd-ftp:
+    image: honeypot_vsftpd
+    ports:
+      - "21:21"
+    networks:
+      - honeynet
+
+  sar2html-web:
+    image: honeypot_sar2html
+    ports:
+      - "80:80"
+    networks:
+      - honeynet
+
+  dvwa-web:
+    image: honeypot_dvwa
+    ports:
+      - "8080:8080"
+    networks:
+      - honeynet
+
+networks:
+  honeynet:
+    driver: bridge

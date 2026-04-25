@@ -1,0 +1,75 @@
+  version: '3.8'
+
+services:
+  loki:
+    image: grafana/loki:2.8.2
+    container_name: loki
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/config:/etc/loki
+      - ./loki/data:/loki
+      - ./loki/wal:/wal
+    restart: unless-stopped
+    networks:
+      - honeynet
+
+  promtail:
+    image: grafana/promtail:2.8.2
+    container_name: promtail
+    volumes:
+      - ./promtail/promtail.yaml:/etc/promtail/promtail.yaml:ro
+      - ./logs/cowrie:/var/log/cowrie:ro
+      - ./logs/suricata:/var/log/suricata:ro
+      - ./promtail/positions:/tmp/positions
+    command: -config.file=/etc/promtail/promtail.yaml
+    restart: unless-stopped
+    depends_on:
+      - loki
+    networks:
+      - honeynet
+
+  grafana:
+    image: grafana/grafana:9.5.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-clock-panel
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-storage:/var/lib/grafana
+    restart: unless-stopped
+    depends_on:
+      - loki
+    networks:
+      - honeynet
+
+  frontend-simple:
+    build: ./frontend-simple
+    image: honeynet_frontend_simple
+    ports:
+      - "8081:80"
+    environment:
+      - VITE_LOKI_URL=http://loki:3100
+      - VITE_ALERT_THRESHOLD=30
+      - VITE_ALERT_WINDOW_MINUTES=5
+    depends_on:
+      - loki
+    networks:
+      - honeynet
+
+networks:
+  honeynet:
+    external: true
+    name: g2honeynetdeploy_honeynet
+
+
+volumes:
+  grafana-storage:

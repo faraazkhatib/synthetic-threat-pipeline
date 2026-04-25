@@ -1,0 +1,84 @@
+﻿version: '3'
+
+services:
+  cowrie-ssh:
+    build:
+      context: ./Dockerfiles/cowire
+      dockerfile: Dockerfile
+    image: honeypot_cowrie:latest
+    container_name: cowrie-ssh
+    ports:
+      - "2222:2222"
+    volumes:
+      - ./logs/cowrie:/home/cowrie/cowrie/var/log/cowrie
+      - ./cowrie-data:/home/cowrie/data
+    restart: unless-stopped
+    networks:
+      - honeynet
+
+  vsftpd-ftp:
+    image: honeypot_vsftpd
+    ports:
+      - "21:21"
+    volumes:
+      - ./logs/vsftpd:/var/log/vsftpd
+    networks:
+      - honeynet
+
+  sar2html-web:
+    image: honeypot_sar2html
+    ports:
+      - "80:80"
+    volumes:
+      - ./logs/sar2html:/var/log/apache2
+    networks:
+      - honeynet
+
+  dvwa-web:
+    image: honeypot_dvwa
+    ports:
+      - "8080:80"
+    volumes:
+      - ./logs/dvwa:/var/log/apache2
+      - ./config.inc.php:/var/www/html/dvwa/config/config.inc.php
+    links:
+      - dvwa-db
+    depends_on:
+      - dvwa-db
+    networks:
+      - honeynet
+
+  dvwa-db:
+    image: mysql:5.7
+    container_name: dvwa-db
+    environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: dvwa
+       MYSQL_USER: dvwa
+       MYSQL_PASSWORD: p@ssw0rd
+    networks:
+       - honeynet
+
+
+
+
+  victim-laptop:
+    image: ubuntu:22.04
+    container_name: victim-laptop
+    hostname: victim-laptop
+    # This keeps the container running so we can log in
+    command: tail -f /dev/null 
+    volumes:
+      # We create a 'Downloads' folder to monitor for "malware"
+      - ./victim_downloads:/home/employee/downloads 
+      # The Mailman Drop Point
+      - ./logs:/var/log/shared_logs:ro
+    networks:
+      - honeynet
+
+# --- THE MAILMAN ---
+
+
+networks:
+  honeynet:
+    driver: bridge

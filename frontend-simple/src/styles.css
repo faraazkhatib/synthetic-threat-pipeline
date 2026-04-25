@@ -1,0 +1,10 @@
+body { font-family: Inter, system-ui, sans-serif; margin: 0; background:#0f172a; color:#e6eef8; }
+.header { padding: 1rem; background: #031231; display:flex; justify-content:space-between; align-items:center; }
+.meta span { margin-left: 1rem; font-size: 0.9rem; color:#9fb0d9; }
+.logs-list { padding: 1rem; max-height: 70vh; overflow:auto; }
+.log-row { padding: .35rem .5rem; border-bottom: 1px solid rgba(255,255,255,0.04); display:flex; gap: .75rem; }
+.log-ts { min-width: 12rem; font-size: .85rem; color:#9aaed3; }
+.log-line { white-space: pre-wrap; }
+.alert-toast { position: fixed; top: 1rem; right: 1rem; background: #ff4d4f; color: white; padding: .6rem 1rem; border-radius: 8px; display:flex; gap: .75rem; align-items:center; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+.alert-close { background: transparent; border: none; color: white; cursor: pointer; font-weight:700; }
+.empty { padding: 1rem; color:#9aaed3; }

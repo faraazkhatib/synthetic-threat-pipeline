@@ -1,0 +1,17 @@
+filebeat.modules:
+  - module: wazuh
+    alerts:
+      enabled: true
+    archives:
+      enabled: false
+
+# Turn off all template and ILM checks completely
+setup.template.enabled: false
+setup.ilm.enabled: false
+
+output.elasticsearch:
+  hosts: ["https://wazuh.indexer:9200"]
+  username: "admin"
+  password: "admin"
+  index: "wazuh-alerts-4.x-%{+yyyy.MM.dd}"
+  ssl.verification_mode: none

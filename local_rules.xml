@@ -1,0 +1,6 @@
+<group name="custom_honeypot,">
+  <rule id="100005" level="10">
+    <decoded_as>custom_python_app</decoded_as>
+    <description>Honeypot Brute Force Attempt Detected</description>
+  </rule>
+</group>

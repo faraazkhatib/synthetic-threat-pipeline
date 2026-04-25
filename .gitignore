@@ -1,0 +1,13 @@
+# Python Cache
+__pycache__/
+*.pyc
+venv/
+
+# Datasets & Logs (DO NOT UPLOAD THESE)
+*.csv
+*.log
+*.json
+
+# OS Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,9 @@
+# Start with the factory Wazuh Manager image
+FROM wazuh/wazuh-manager:4.7.2
+
+# Switch to root to change files
+USER root
+
+# Bake in the Filebeat SSL fix
+COPY filebeat.yml /etc/filebeat/filebeat.yml
+RUN chown root:wazuh /etc/filebeat/filebeat.yml && chmod 640 /etc/filebeat/filebeat.yml

@@ -1,0 +1,42 @@
+2026-04-18T10:21:20.531748Z [-] Reading configuration from ['/home/cowrie/cowrie/etc/cowrie.cfg.dist']
+2026-04-18T10:21:21.565007Z [-] Python Version 3.11.14 (main, Nov 18 2025, 05:57:35) [GCC 14.2.0]
+2026-04-18T10:21:21.565061Z [-] Twisted Version 25.5.0
+2026-04-18T10:21:21.565071Z [-] Cowrie Version 2.9.1.dev6+g922cfc3be
+2026-04-18T10:21:21.565077Z [-] Sensor UUID: 5880f458-3b10-11f1-ba4d-c6e03f967f59
+2026-04-18T10:21:21.599482Z [-] Loaded output engine: jsonlog
+2026-04-18T10:21:21.660311Z [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 25.5.0 (/home/cowrie/cowrie/cowrie-env/bin/python3 3.11.14) starting up.
+2026-04-18T10:21:21.661204Z [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2026-04-18T10:21:21.662452Z [-] CowrieSSHFactory starting on 2222
+2026-04-18T10:21:21.662901Z [cowrie.ssh.factory.CowrieSSHFactory#info] Starting factory <cowrie.ssh.factory.CowrieSSHFactory object at 0x74956c996710>
+2026-04-18T10:21:21.741850Z [-] Ready to accept SSH connections
+2026-04-18T10:40:52.285830Z [cowrie.ssh.factory.CowrieSSHFactory] No moduli, no diffie-hellman-group-exchange-sha1
+2026-04-18T10:40:52.293511Z [cowrie.ssh.factory.CowrieSSHFactory] No moduli, no diffie-hellman-group-exchange-sha256
+2026-04-18T10:40:52.302161Z [cowrie.ssh.factory.CowrieSSHFactory] New connection: 172.18.0.1:60628 (172.18.0.3:2222) [session: b2469979d209]
+2026-04-18T10:40:52.336697Z [HoneyPotSSHTransport,0,172.18.0.1] Remote SSH version: SSH-2.0-OpenSSH_for_Windows_9.5
+2026-04-18T10:40:52.362369Z [HoneyPotSSHTransport,0,172.18.0.1] SSH client hassh fingerprint: 701158e75b508e76f0410d5d22ef9df0
+2026-04-18T10:40:52.400941Z [cowrie.ssh.transport.HoneyPotSSHTransport#debug] kex alg=b'curve25519-sha256' key alg=b'ssh-ed25519'
+2026-04-18T10:40:52.401628Z [cowrie.ssh.transport.HoneyPotSSHTransport#debug] outgoing: b'aes128-ctr' b'hmac-sha2-256' b'none'
+2026-04-18T10:40:52.402161Z [cowrie.ssh.transport.HoneyPotSSHTransport#debug] incoming: b'aes128-ctr' b'hmac-sha2-256' b'none'
+2026-04-18T10:40:52.423762Z [cowrie.ssh.transport.HoneyPotSSHTransport#info] connection lost
+2026-04-18T10:40:52.424810Z [HoneyPotSSHTransport,0,172.18.0.1] Connection lost after 0.1 seconds
+2026-04-18T11:01:12.974259Z [twisted.internet.base#info] Received SIGTERM, shutting down.
+2026-04-18T11:01:12.991923Z [-] (TCP Port 2222 Closed)
+2026-04-18T11:01:12.995524Z [cowrie.ssh.factory.CowrieSSHFactory#info] Stopping factory <cowrie.ssh.factory.CowrieSSHFactory object at 0x74956c996710>
+2026-04-18T11:01:12.998858Z [twisted.internet.base#info] Main loop terminated.
+2026-04-18T11:01:13.008353Z [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.
+2026-04-18T11:01:36.004942Z [-] Reading configuration from ['/home/cowrie/cowrie/etc/cowrie.cfg.dist']
+2026-04-18T11:01:36.347321Z [-] Python Version 3.11.14 (main, Nov 18 2025, 05:57:35) [GCC 14.2.0]
+2026-04-18T11:01:36.347368Z [-] Twisted Version 25.5.0
+2026-04-18T11:01:36.347377Z [-] Cowrie Version 2.9.1.dev6+g922cfc3be
+2026-04-18T11:01:36.347383Z [-] Sensor UUID: f7d42084-3b15-11f1-9726-8eacb2c55e0a
+2026-04-18T11:01:36.357639Z [-] Loaded output engine: jsonlog
+2026-04-18T11:01:36.366060Z [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 25.5.0 (/home/cowrie/cowrie/cowrie-env/bin/python3 3.11.14) starting up.
+2026-04-18T11:01:36.366760Z [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2026-04-18T11:01:36.367970Z [-] CowrieSSHFactory starting on 2222
+2026-04-18T11:01:36.368617Z [cowrie.ssh.factory.CowrieSSHFactory#info] Starting factory <cowrie.ssh.factory.CowrieSSHFactory object at 0x74fb2576b710>
+2026-04-18T11:01:36.446083Z [-] Ready to accept SSH connections
+2026-04-18T13:44:25.322634Z [twisted.internet.base#info] Received SIGTERM, shutting down.
+2026-04-18T13:44:25.356852Z [-] (TCP Port 2222 Closed)
+2026-04-18T13:44:25.359723Z [cowrie.ssh.factory.CowrieSSHFactory#info] Stopping factory <cowrie.ssh.factory.CowrieSSHFactory object at 0x74fb2576b710>
+2026-04-18T13:44:25.362633Z [twisted.internet.base#info] Main loop terminated.
+2026-04-18T13:44:25.366002Z [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.

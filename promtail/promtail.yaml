@@ -1,0 +1,43 @@
+﻿server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+
+  # COWRIE
+  - job_name: cowrie
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: cowrie
+          __path__: /home/cowrie/cowrie/var/log/cowrie/*.log
+
+  # DVWA (Apache Logs)
+  - job_name: dvwa
+    static_configs:
+    - targets: ['localhost']
+      labels:
+        job: dvwa
+        __path__: /var/log/dvwa/*.log   # <--- Updated path
+
+  # SAR2HTML (Apache Logs)
+  - job_name: sar2html
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: sar2html
+          __path__: /var/log/sar2html/*.log
+
+  # VSFTPD
+  - job_name: vsftpd
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: vsftpd
+          __path__: /var/log/vsftpd/*.log

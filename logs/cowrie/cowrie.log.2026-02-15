@@ -1,0 +1,16 @@
+2026-02-15T20:32:24.972065Z [-] Reading configuration from ['/home/cowrie/cowrie/etc/cowrie.cfg.dist']
+2026-02-15T20:32:25.570522Z [-] Python Version 3.11.14 (main, Nov 18 2025, 05:57:35) [GCC 14.2.0]
+2026-02-15T20:32:25.570558Z [-] Twisted Version 25.5.0
+2026-02-15T20:32:25.570567Z [-] Cowrie Version 2.9.1.dev6+g922cfc3be
+2026-02-15T20:32:25.570572Z [-] Sensor UUID: 7057e638-0aad-11f1-904d-8a375c14cbae
+2026-02-15T20:32:25.596517Z [-] Loaded output engine: jsonlog
+2026-02-15T20:32:25.650143Z [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 25.5.0 (/home/cowrie/cowrie/cowrie-env/bin/python3 3.11.14) starting up.
+2026-02-15T20:32:25.653169Z [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2026-02-15T20:32:25.654637Z [-] CowrieSSHFactory starting on 2222
+2026-02-15T20:32:25.655157Z [cowrie.ssh.factory.CowrieSSHFactory#info] Starting factory <cowrie.ssh.factory.CowrieSSHFactory object at 0x7c401d383090>
+2026-02-15T20:32:25.713946Z [-] Ready to accept SSH connections
+2026-02-15T21:43:30.248078Z [twisted.internet.base#info] Received SIGTERM, shutting down.
+2026-02-15T21:43:30.277279Z [-] (TCP Port 2222 Closed)
+2026-02-15T21:43:30.280126Z [cowrie.ssh.factory.CowrieSSHFactory#info] Stopping factory <cowrie.ssh.factory.CowrieSSHFactory object at 0x7c401d383090>
+2026-02-15T21:43:30.282319Z [twisted.internet.base#info] Main loop terminated.
+2026-02-15T21:43:30.286736Z [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.
