@@ -52,11 +52,11 @@ _Note: Allow 3–5 minutes for the containers to fully initialize and for the Wa
 
 Once the infrastructure is actively listening, the data generation and classification pipeline can be executed sequentially:
 
-1.  Bashpython chaos.py_Expected Output: Real-time Level 12 Critical Alerts populated on the local Wazuh Dashboard._
+1.  python chaos.py_Expected Output: Real-time Level 12 Critical Alerts populated on the local Wazuh Dashboard._
     
-2.  Bashpython reader.py
+2.  python reader.py
     
-3.  Bashpython train\_model.py
+3.  python train\_model.py
     
 
 **Troubleshooting Note:** If the SIEM dashboard fails to display web-based SQL injection alerts during testing, verify that the dashboard time-filter is set to UTC, or restart the Wazuh manager to ensure the URL-encoded custom XML rules have been fully applied.
